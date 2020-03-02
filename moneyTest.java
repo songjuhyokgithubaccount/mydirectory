@@ -2,30 +2,42 @@ package pocketmoney;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
-
+@RunWith(Parameterized.class)
 public class moneyTest {
-	money pocMoney;
+	private money pocMoney = null;
+	private int input;
+	private int  expected;
+	public moneyTest(int input,int expected){
+		this.input = input;
+		this.expected = expected;
+	}
 	@Before
 	public void setup() {
 		pocMoney = new money();
 	}
-	@Test
-	public void test01() {
-		assertEquals( 1,pocMoney.func(2) );
+	@Parameters
+	public static Collection<Object[]> getData(){
+			
+		return Arrays.asList(new Object[][]{
+			{2,1},
+			{36,1},
+			{79,0},
+			{78,1}
+			});
 	}
+
 	@Test
-	public void test02() {
-		assertEquals( 1,pocMoney.func(36) );
-	}
-	@Test
-	public void test03() {
-		assertEquals( 0,pocMoney.func(79) );
-	}
-	@Test
-	public void test04() {
-		assertEquals( 1,pocMoney.func(78) );
+	public void test() {
+		
+		assertEquals(this.expected,pocMoney.func(input));
 	}
 }
